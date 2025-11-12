@@ -1,0 +1,50 @@
+{
+  "clear": [
+    "/main/img/converted_mp4/Good Morning Summer GIF.mp4",
+    "/main/img/converted_webp/Good Morning Summer GIF.webp",
+    "/main/img/Good Morning Summer GIF.gif",
+    "/main/img/weather-gifs/clear.svg"
+  ],
+  "rain": [
+    "/main/img/converted_mp4/Animation Raining GIF.mp4",
+    "/main/img/converted_mp4/Happy Rainy Day GIF by Philippa Rice.mp4",
+    "/main/img/converted_mp4/Raining Rainy Day GIF by Pudgy Penguins.mp4",
+    "/main/img/converted_webp/Animation Raining GIF.webp",
+    "/main/img/converted_webp/Happy Rainy Day GIF by Philippa Rice.webp",
+    "/main/img/converted_webp/Raining Rainy Day GIF by Pudgy Penguins.webp",
+    "/main/img/Animation Raining GIF.gif",
+    "/main/img/Happy Rainy Day GIF by Philippa Rice.gif",
+    "/main/img/Raining Rainy Day GIF by Pudgy Penguins.gif",
+    "/main/img/weather-gifs/rain.svg"
+  ],
+  "snow": [
+    "/main/img/converted_mp4/Charlie Brown Snow GIF.mp4",
+    "/main/img/converted_webp/Charlie Brown Snow GIF.webp",
+    "/main/img/Charlie Brown Snow GIF.gif",
+    "/main/img/weather-gifs/snow.svg"
+  ],
+  "clouds": [
+    "/main/img/converted_mp4/studio ghibli GIF (1).mp4",
+    "/main/img/converted_webp/studio ghibli GIF (1).webp",
+    "/main/img/studio ghibli GIF (1).gif",
+    "/main/img/weather-gifs/clouds.svg"
+  ],
+  "thunderstorm": [
+    "/main/img/weather-gifs/thunderstorm.svg"
+  ],
+  "drizzle": [
+    "/main/img/weather-gifs/drizzle.svg"
+  ],
+  "mist": [
+    "/main/img/converted_mp4/mist GIF.mp4",
+    "/main/img/converted_webp/mist GIF.webp",
+    "/main/img/mist GIF.gif",
+    "/main/img/weather-gifs/mist.svg"
+  ],
+  "fog": [],
+  "default": [
+    "/main/img/converted_mp4/Bother Mother Nature GIF by joonasjoonas.mp4",
+    "/main/img/converted_webp/Bother Mother Nature GIF by joonasjoonas.webp",
+    "/main/img/Bother Mother Nature GIF by joonasjoonas.gif"
+  ]
+}

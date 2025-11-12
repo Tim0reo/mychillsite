@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="400" height="400" aria-hidden="true">
+  <!-- Mist / Fog: thin horizontal lines -->
+  <g stroke="#78909C" stroke-width="2" stroke-linecap="round">
+    <path d="M12 26h40" />
+    <path d="M10 34h44" />
+    <path d="M14 42h36" />
+  </g>
+</svg>
