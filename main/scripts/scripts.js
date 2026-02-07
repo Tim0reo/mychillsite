@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", function() {
             document.body.style.backgroundPosition = "center";
             document.body.style.backgroundAttachment = "fixed";
             document.body.classList.add('bg-loaded');
+            const loader = document.getElementById('bg-loader');
+            if (loader) {
+                setTimeout(() => loader.remove(), 350);
+            }
         };
         img.src = backgroundImage;
     }
