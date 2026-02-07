@@ -215,7 +215,7 @@ header {
       max-width: 100%;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 10px;
+      bottom: 60px;
     }
   }
 
@@ -340,7 +340,7 @@ header {
 
 @media (max-width: 480px) {
     .footer {
-        bottom: 80px;
+        bottom: 0;
         padding: 8px;
     }
     .footer span a {
