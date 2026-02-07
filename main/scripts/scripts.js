@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const lang = localStorage.getItem('selectedLanguage') || 'ru';
         // Запрос теперь идёт к локальному прокси-серверу (/api/weather),
         // который использует OPENWEATHER_KEY на сервере. API-ключ не хранится в клиентском коде.
-        const url = `/api/weather?q=${encodeURIComponent(cleanCity)}&lang=${encodeURIComponent(lang)}`;
+        const url = `https://mychillsite.onrender.com/api/weather?q=${encodeURIComponent(cleanCity)}&lang=${encodeURIComponent(lang)}`;
 
         // Simple client-side cache (localStorage) with TTL to reduce API calls
         const cacheKey = `weather_cache_${cleanCity.toLowerCase()}_${lang}`;
