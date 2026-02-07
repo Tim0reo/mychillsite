@@ -100,6 +100,7 @@ header {
     text-align: center;
     color: white;
     width: 100%;
+    z-index: 1200;
 }
 
 .weather-container {
@@ -151,11 +152,11 @@ header {
     background-color: #ff6b81;
 }
 
-#music-player {
+  #music-player {
     position: fixed;
     bottom: 80px;
     left: 20px;
-    z-index: 1000;
+    z-index: 900;
     width: 300px;
     height: 80px;
     border-radius: 12px;
@@ -182,7 +183,12 @@ header {
   
   @media (max-width: 480px) {
     #music-player {
-      height: 80px;
+      height: 60px;
+      width: calc(100% - 20px);
+      max-width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10px;
     }
   }
 
