@@ -1,6 +1,7 @@
 @media (max-width: 600px) {
   #id_clock {
     font-size: 30px;
+    top: 30%;
   }
   .weather-container {
     flex-direction: column;
@@ -222,6 +223,12 @@ header {
     #weather {
       top: 55%;
       width: 92%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #id_clock {
+      top: 28%;
     }
   }
 
