@@ -337,3 +337,14 @@ header {
         font-size: 14px;
     }
 }
+
+@media (max-width: 480px) {
+    .footer {
+        bottom: 80px;
+        padding: 8px;
+    }
+    .footer span a {
+        margin: 0 8px;
+        font-size: 14px;
+    }
+}
