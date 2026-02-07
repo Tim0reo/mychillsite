@@ -14,10 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
             hour >= 12 && hour < 18 ? backgrounds.day :
             backgrounds.night;
 
-        document.body.style.backgroundImage = `url('${backgroundImage}')`;
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundAttachment = "fixed";
+        // Preload to avoid white flash before image is ready
+        const img = new Image();
+        img.onload = () => {
+            document.body.style.backgroundImage = `url('${backgroundImage}')`;
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            document.body.style.backgroundAttachment = "fixed";
+            document.body.classList.add('bg-loaded');
+        };
+        img.src = backgroundImage;
     }
 
     changeBackground();
