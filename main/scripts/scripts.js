@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         overflow: hidden;
                         flex-shrink: 0;
                     ">
-                        <img src="${weatherGifs["default"]}" alt="Weather GIF" style="
+                        <img src="${(weatherGifs["default"] || [])[0] || "/main/img/weather-gifs/clouds.svg"}" alt="Weather GIF" style="
                             width: 100%;
                             height: 100%;
                             object-fit: cover;
