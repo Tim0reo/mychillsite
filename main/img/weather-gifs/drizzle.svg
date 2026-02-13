@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="400" height="400" aria-hidden="true">
+  <!-- Drizzle: cloud with light drops -->
+  <g fill="none" stroke="#546E7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 30H20c-4 0-6-3-6-6s3-6 6-6c1-4 5-7 9-7 4 0 7 2 9 5 2 0 5 2 5 5s-3 6-6 6z" fill="#ECEFF1"/>
+    <g stroke="#2196F3" stroke-width="2">
+      <path d="M24 38v6"/>
+      <path d="M30 38v8"/>
+      <path d="M36 38v6"/>
+    </g>
+  </g>
+</svg>

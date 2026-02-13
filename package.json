@@ -1,0 +1,16 @@
+{
+  "name": "mychillsite",
+  "version": "1.0.0",
+  "description": "Static Chill Time site with a small server proxy for OpenWeather",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "generate-manifest": "node tools/generate_media_manifest.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "npm": "^11.6.2",
+    "start": "^5.1.0"
+  }
+}
