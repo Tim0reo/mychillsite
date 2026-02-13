@@ -17,13 +17,17 @@ app.use(express.static(path.join(__dirname)));
 // Simple proxy for OpenWeatherMap to keep the API key server-side
 app.get('/api/weather', (req, res) => {
   const q = req.query.q || 'Khabarovsk';
+  const lat = req.query.lat;
+  const lon = req.query.lon;
   const lang = req.query.lang || 'ru';
 
   if (!OPENWEATHER_KEY) {
     return res.status(500).json({ error: 'Server: OPENWEATHER_KEY is not configured' });
   }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(q)}&units=metric&appid=${OPENWEATHER_KEY}&lang=${encodeURIComponent(lang)}`;
+  const url = lat && lon
+    ? `https://api.openweathermap.org/data/2.5/weather?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&units=metric&appid=${OPENWEATHER_KEY}&lang=${encodeURIComponent(lang)}`
+    : `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(q)}&units=metric&appid=${OPENWEATHER_KEY}&lang=${encodeURIComponent(lang)}`;
 
   https.get(url, (apiRes) => {
     let data = '';

@@ -240,9 +240,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.body.appendChild(languageSelector);
 
-        // Применяем сохраненный язык при загрузке
+        // Применяем сохраненный язык при загрузке без лишнего запроса погоды
         const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
-        changeLanguage(savedLang);
+        localStorage.setItem('selectedLanguage', savedLang);
     }
 
     // Функция получения погоды
@@ -382,6 +382,42 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         }
+    }
+
+    // Функция получения погоды по координатам пользователя
+    async function getWeatherByCoords(lat, lon) {
+        const lang = localStorage.getItem('selectedLanguage') || 'ru';
+        const url = `https://mychillsite.onrender.com/api/weather?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&lang=${encodeURIComponent(lang)}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.cod === 200) {
+                localStorage.setItem('lastCity', data.name);
+                await renderWeather(data, lang);
+            } else {
+                throw new Error(translations[lang].cityNotFound);
+            }
+        } catch (error) {
+            console.error('Ошибка получения погоды по координатам:', error);
+            throw error;
+        }
+    }
+
+    function getUserPosition() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.geolocation) {
+                reject(new Error('Geolocation is not supported'));
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 600000
+            });
+        });
     }
 
     // Рендер погоды — вынесен, чтобы можно было переиспользовать (и использовать кеш)
@@ -574,21 +610,31 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Первичный запрос погоды
     async function initWeather() {
-        // Пробуем получить последний сохраненный город
+        // Сначала пробуем точную геолокацию браузера
+        try {
+            const position = await getUserPosition();
+            await getWeatherByCoords(position.coords.latitude, position.coords.longitude);
+            return;
+        } catch (geoError) {
+            console.warn('Не удалось получить геолокацию:', geoError);
+        }
+
+        // Fallback: последний город
         const lastCity = localStorage.getItem('lastCity');
         if (lastCity) {
             await getWeather(lastCity);
-        } else {
-            // Если нет сохраненного города, пробуем определить по IP
-            try {
-                const ipResponse = await fetch('https://ipapi.co/json/');
-                const ipData = await ipResponse.json();
-                const city = ipData.city || 'Khabarovsk';
-                await getWeather(city);
-            } catch (error) {
-                console.error('Ошибка определения по IP:', error);
-                await getWeather('Khabarovsk');
-            }
+            return;
+        }
+
+        // Fallback: определение по IP
+        try {
+            const ipResponse = await fetch('https://ipapi.co/json/');
+            const ipData = await ipResponse.json();
+            const city = ipData.city || 'Khabarovsk';
+            await getWeather(city);
+        } catch (error) {
+            console.error('Ошибка определения по IP:', error);
+            await getWeather('Khabarovsk');
         }
     }
 
