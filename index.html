@@ -243,7 +243,11 @@ header {
 
 /* На узких экранах боковое меню стало бы тесным для игрового поля. */
 @media (max-width: 700px) {
-    body { padding: 142px 0 24px; }
+    body {
+        min-height: 100svh;
+        padding: 142px 0 84px;
+        box-sizing: border-box;
+    }
     .chill-tabs {
         top: 78px;
         left: 50%;
@@ -273,18 +277,23 @@ header {
 
     /* Дополнительные фиксированные элементы не закрывают открытую вкладку. */
     body.chill-tab-open #id_clock,
-    body.chill-tab-open #music-player,
     body.chill-tab-open .falling-gifs-button { display: none; }
 
+    /* Встроенный Spotify на телефоне перекрывает почти весь нижний экран. */
+    #music-player { display: none; }
     .falling-gifs-button {
         top: auto;
         right: 10px;
-        bottom: 140px;
+        bottom: 64px;
     }
     .footer {
-        position: static;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
         box-sizing: border-box;
-        margin-top: 24px;
+        margin: 0;
     }
     #language-selector {
         top: 4px !important;
