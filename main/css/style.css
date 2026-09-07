@@ -78,6 +78,7 @@ header {
     position: relative;
     height: 30px;
     width: 100%;
+    overflow: hidden;
 }
 
 .marquee-text {
@@ -89,21 +90,19 @@ header {
     text-transform: uppercase;
     text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.7);
     opacity: 0;
-    animation: textFade 18s infinite; 
+    animation: textFade 12s infinite;
 }
 
+/* 3 phrases, evenly spaced across the 12s cycle (4s each) so there's no dead gap */
 .marquee-text:nth-child(1) { animation-delay: 0s; }
-.marquee-text:nth-child(2) { animation-delay: 3s; } 
-.marquee-text:nth-child(3) { animation-delay: 6s; }
-.marquee-text:nth-child(4) { animation-delay: 9s; }
-.marquee-text:nth-child(5) { animation-delay: 12s; }
-.marquee-text:nth-child(6) { animation-delay: 15s; }
+.marquee-text:nth-child(2) { animation-delay: 4s; }
+.marquee-text:nth-child(3) { animation-delay: 8s; }
 
 @keyframes textFade {
-    0% { opacity: 0; transform: translateY(20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    20% { opacity: 1; transform: translateY(0); }
-    25% { opacity: 0; transform: translateY(-20px); } 
+    0%   { opacity: 0; transform: translateY(20px); }
+    4%   { opacity: 1; transform: translateY(0); }
+    29%  { opacity: 1; transform: translateY(0); }
+    33%  { opacity: 0; transform: translateY(-20px); }
     100% { opacity: 0; transform: translateY(-20px); }
 }
 
@@ -299,7 +298,7 @@ header {
 /* Falling GIFs button */
 .falling-gifs-button {
     position: fixed;
-    top: 100px;
+    top: 125px;
     right: 30px;
     padding: 10px 20px;
     background: rgba(255, 71, 87, 0.8);
@@ -332,7 +331,7 @@ header {
 
 @media (max-width: 600px) {
     .falling-gifs-button {
-        top: 70px;
+        top: 122px;
         right: 10px;
         padding: 8px 16px;
         font-size: 14px;
