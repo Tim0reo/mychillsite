@@ -243,7 +243,7 @@ header {
 
 /* На узких экранах боковое меню стало бы тесным для игрового поля. */
 @media (max-width: 700px) {
-    body { padding-top: 142px; }
+    body { padding: 142px 0 24px; }
     .chill-tabs {
         top: 78px;
         left: 50%;
@@ -252,6 +252,47 @@ header {
         width: min(400px, calc(100% - 32px));
     }
     .chill-tab { flex: 1; }
+
+    /* На телефоне контент должен идти друг за другом, а не пересекаться с часами. */
+    #id_clock {
+        position: static;
+        transform: none;
+        margin: 0 auto 18px;
+        text-align: center;
+        font-size: clamp(32px, 10vw, 42px);
+    }
+    .chill-section {
+        width: min(100%, 420px);
+        box-sizing: border-box;
+        margin: 0 auto 20px;
+        padding: 0 12px;
+    }
+    .chill-card { padding: 16px; }
+    #weather { box-sizing: border-box; padding: 0 4px !important; }
+    .g2048-board { width: min(320px, 100%); }
+
+    /* Дополнительные фиксированные элементы не закрывают открытую вкладку. */
+    body.chill-tab-open #id_clock,
+    body.chill-tab-open #music-player,
+    body.chill-tab-open .falling-gifs-button { display: none; }
+
+    .falling-gifs-button {
+        top: auto;
+        right: 10px;
+        bottom: 140px;
+    }
+    .footer {
+        position: static;
+        box-sizing: border-box;
+        margin-top: 24px;
+    }
+    #language-selector {
+        top: 4px !important;
+        right: 4px !important;
+        gap: 2px !important;
+    }
+    #language-selector button { font-size: 18px !important; }
+    .marquee-text { font-size: 16px; }
 }
 </style>
 <base target="_blank">
@@ -364,6 +405,7 @@ function openChillTab(tab) {
         document.querySelectorAll('.chill-section').forEach(x => x.classList.remove('active'));
         tab.classList.add('active');
         section.classList.add('active');
+        document.body.classList.add('chill-tab-open');
 }
 
 document.querySelectorAll('.chill-tab').forEach(tab => {
