@@ -49,12 +49,44 @@ document.addEventListener("DOMContentLoaded", function() {
     // Объект с переводами....
     const translations = {
         ru: {
+            // Погода
             searchCity: "Найти город",
             weatherPlaceholder: "Введите город",
             ok: "OK",
             cityNotFound: "Город не найден",
             humidity: "Влажность",
-            wind: "Ветер"
+            wind: "Ветер",
+            weatherLoading: "Загрузка погоды...",
+            // Навигация
+            navPomo: "⏱️ Помодоро",
+            navGame: "🎮 2048",
+            navWeather: "🌤️ Погода",
+            navAriaLabel: "Разделы сайта",
+            // Помодоро
+            modeLabel: "Режим:",
+            modeWork: "Фокус",
+            modeShort: "Короткий перерыв",
+            modeLong: "Длинный перерыв",
+            btnStart: "Старт",
+            btnPause: "Пауза",
+            btnReset: "Сброс",
+            modeWorkBtn: "Фокус 25",
+            modeShortBtn: "Короткий 5",
+            modeLongBtn: "Длинный 15",
+            notifTitle: "Chill Time",
+            notifBreak: "Время отдохнуть!",
+            notifWork: "Время работать!",
+            // 2048
+            scoreLabel: "Счёт",
+            newGame: "🔄 Новая игра",
+            newGameBtn: "Новая игра",
+            gameOverSimple: "Игра окончена!",
+            gameOverScore: "Игра окончена! Счёт: ",
+            winText: "🎉 Победа! 2048!",
+            hint: "Свайпайте по полю или жмите стрелки",
+            // Прочее
+            fallingBtn: "❄️ Посыпать 😈",
+            fallingBtnTitle: "Нажмите для падающих GIF-ов"
         },
         en: {
             searchCity: "Find City",
@@ -62,7 +94,34 @@ document.addEventListener("DOMContentLoaded", function() {
             ok: "OK",
             cityNotFound: "City not found",
             humidity: "Humidity",
-            wind: "Wind"
+            wind: "Wind",
+            weatherLoading: "Loading weather...",
+            navPomo: "⏱️ Pomodoro",
+            navGame: "🎮 2048",
+            navWeather: "🌤️ Weather",
+            navAriaLabel: "Site sections",
+            modeLabel: "Mode:",
+            modeWork: "Focus",
+            modeShort: "Short break",
+            modeLong: "Long break",
+            btnStart: "Start",
+            btnPause: "Pause",
+            btnReset: "Reset",
+            modeWorkBtn: "Focus 25",
+            modeShortBtn: "Short 5",
+            modeLongBtn: "Long 15",
+            notifTitle: "Chill Time",
+            notifBreak: "Time to rest!",
+            notifWork: "Time to work!",
+            scoreLabel: "Score",
+            newGame: "🔄 New game",
+            newGameBtn: "New game",
+            gameOverSimple: "Game over!",
+            gameOverScore: "Game over! Score: ",
+            winText: "🎉 You won! 2048!",
+            hint: "Swipe the board or use arrow keys",
+            fallingBtn: "❄️ Sprinkle 😈",
+            fallingBtnTitle: "Click for falling GIFs"
         },
         jp: {
             searchCity: "都市を探す",
@@ -70,9 +129,77 @@ document.addEventListener("DOMContentLoaded", function() {
             ok: "OK",
             cityNotFound: "都市が見つかりません",
             humidity: "湿度",
-            wind: "風"
+            wind: "風",
+            weatherLoading: "天気を読み込み中...",
+            navPomo: "⏱️ ポモドーロ",
+            navGame: "🎮 2048",
+            navWeather: "🌤️ 天気",
+            navAriaLabel: "サイトのセクション",
+            modeLabel: "モード:",
+            modeWork: "集中",
+            modeShort: "短い休憩",
+            modeLong: "長い休憩",
+            btnStart: "スタート",
+            btnPause: "一時停止",
+            btnReset: "リセット",
+            modeWorkBtn: "集中 25",
+            modeShortBtn: "短い休憩 5",
+            modeLongBtn: "長い休憩 15",
+            notifTitle: "Chill Time",
+            notifBreak: "休憩の時間です!",
+            notifWork: "作業の時間です!",
+            scoreLabel: "スコア",
+            newGame: "🔄 新しいゲーム",
+            newGameBtn: "新しいゲーム",
+            gameOverSimple: "ゲームオーバー!",
+            gameOverScore: "ゲームオーバー! スコア: ",
+            winText: "🎉 勝利! 2048!",
+            hint: "盤面をスワイプするか矢印キーを使ってください",
+            fallingBtn: "❄️ 降らせる 😈",
+            fallingBtnTitle: "クリックでGIFが降ります"
         }
     };
+
+    // Делаем переводы доступными для инлайн-скриптов (Pomodoro, 2048) на странице
+    window.CHILL_I18N = {
+        translations,
+        getLang() {
+            return localStorage.getItem('selectedLanguage') || 'ru';
+        },
+        t(key) {
+            const lang = this.getLang();
+            return (translations[lang] && translations[lang][key]) || (translations.ru && translations.ru[key]) || key;
+        }
+    };
+
+    // Применяет переводы ко всем статическим элементам страницы по data-атрибутам:
+    // data-i18n           -> textContent
+    // data-i18n-title      -> title
+    // data-i18n-aria-label -> aria-label
+    function applyStaticTranslations(lang) {
+        const dict = translations[lang] || translations.ru;
+
+        document.documentElement.lang = lang === 'jp' ? 'ja' : lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            if (dict[key] !== undefined) el.title = dict[key];
+        });
+
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+            const key = el.getAttribute('data-i18n-aria-label');
+            if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
+        });
+
+        // Сообщаем остальным скриптам (Pomodoro/2048), что язык сменился,
+        // чтобы они могли обновить динамический текст (кнопки, лейблы состояния)
+        document.dispatchEvent(new CustomEvent('chillLanguageChange', { detail: { lang } }));
+    }
 
     // Mapping weather conditions to ordered lists of candidate media files.
     // Priority: MP4 -> WebP -> GIF -> SVG (SVG as lightweight fallback).
@@ -199,6 +326,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Сохраняем текущий выбранный город перед сменой языка
         const currentCity = localStorage.getItem('lastCity') || "Khabarovsk";
         localStorage.setItem('selectedLanguage', lang);
+        applyStaticTranslations(lang);
         getWeather(currentCity);
     }
 

@@ -325,10 +325,10 @@ header {
 <div class="marquee-text">ぜったいあきらめないで!</div>
 <div class="marquee-text">НИКОГДА НЕ СДАВАЙСЯ!</div>
 </div>
-<nav class="chill-tabs" aria-label="Разделы сайта">
-    <button class="chill-tab" data-tab="pomo">⏱️ Помодоро</button>
-    <button class="chill-tab" data-tab="g2048">🎮 2048</button>
-    <button class="chill-tab" data-tab="weather-tab">🌤️ Погода</button>
+<nav class="chill-tabs" aria-label="Разделы сайта" data-i18n-aria-label="navAriaLabel">
+    <button class="chill-tab" data-tab="pomo" data-i18n="navPomo">⏱️ Помодоро</button>
+    <button class="chill-tab" data-tab="g2048" data-i18n="navGame">🎮 2048</button>
+    <button class="chill-tab" data-tab="weather-tab" data-i18n="navWeather">🌤️ Погода</button>
 </nav>
 </header>
 
@@ -342,15 +342,15 @@ header {
             <svg viewBox="0 0 180 180"><circle class="pomo-ring-bg" cx="90" cy="90" r="80"/><circle class="pomo-ring-fill" cx="90" cy="90" r="80" id="pomoRing"/></svg>
             <div class="pomo-time" id="pomoTime">25:00</div>
         </div>
-        <div class="pomo-label">Режим: <span id="pomoLabel">Фокус</span></div>
+        <div class="pomo-label"><span data-i18n="modeLabel">Режим:</span> <span id="pomoLabel" data-mode-key="modeWork">Фокус</span></div>
         <div class="pomo-btns">
-            <button class="pomo-btn start" id="pomoStart">Старт</button>
-            <button class="pomo-btn reset" id="pomoReset">Сброс</button>
+            <button class="pomo-btn start" id="pomoStart" data-state-key="btnStart">Старт</button>
+            <button class="pomo-btn reset" id="pomoReset" data-i18n="btnReset">Сброс</button>
         </div>
         <div class="pomo-modes">
-            <button class="pomo-mode active" data-m="work" data-t="25">Фокус 25</button>
-            <button class="pomo-mode" data-m="short" data-t="5">Короткий 5</button>
-            <button class="pomo-mode" data-m="long" data-t="15">Длинный 15</button>
+            <button class="pomo-mode active" data-m="work" data-t="25" data-i18n="modeWorkBtn">Фокус 25</button>
+            <button class="pomo-mode" data-m="short" data-t="5" data-i18n="modeShortBtn">Короткий 5</button>
+            <button class="pomo-mode" data-m="long" data-t="15" data-i18n="modeLongBtn">Длинный 15</button>
         </div>
     </div>
 </div>
@@ -361,18 +361,18 @@ header {
         <div class="g2048-header">
             <div class="g2048-title">2048</div>
             <div class="g2048-score-box">
-                <div class="g2048-score-label">Счёт</div>
+                <div class="g2048-score-label" data-i18n="scoreLabel">Счёт</div>
                 <div class="g2048-score" id="g2048Score">0</div>
             </div>
         </div>
         <div class="g2048-board" id="g2048Board">
             <div class="g2048-over" id="g2048Over">
                 <div class="g2048-over-text" id="g2048OverText">Игра окончена!</div>
-                <button class="g2048-over-btn" onclick="init2048()">Новая игра</button>
+                <button class="g2048-over-btn" onclick="init2048()" data-i18n="newGameBtn">Новая игра</button>
             </div>
         </div>
         <div class="pomo-btns" style="margin-bottom:14px;">
-            <button class="pomo-btn start" onclick="init2048()">🔄 Новая игра</button>
+            <button class="pomo-btn start" onclick="init2048()" data-i18n="newGame">🔄 Новая игра</button>
         </div>
         <div class="g2048-dpad">
             <div></div>
@@ -385,18 +385,18 @@ header {
             <button class="g2048-dpad-btn" onclick="move2048('down')">↓</button>
             <div></div>
         </div>
-        <p class="g2048-hint">Свайпайте по полю или жмите стрелки</p>
+        <p class="g2048-hint" data-i18n="hint">Свайпайте по полю или жмите стрелки</p>
     </div>
 </div>
 
 <!-- Weather Section -->
 <div class="chill-section" id="weather-tab">
     <div id="weather" style="max-width:420px;margin:0 auto;padding:0 16px;">
-        <p>Загрузка погоды...</p>
+        <p data-i18n="weatherLoading">Загрузка погоды...</p>
     </div>
 </div>
 
-<button id="falling-gifs-btn" class="falling-gifs-button" title="Нажмите для падающих GIF-ов">❄️ Посыпать 😈</button>
+<button id="falling-gifs-btn" class="falling-gifs-button" data-i18n="fallingBtn" data-i18n-title="fallingBtnTitle" title="Нажмите для падающих GIF-ов">❄️ Посыпать 😈</button>
 
 <div id="music-player">
 <iframe id="spotify-embed" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn"
@@ -451,32 +451,60 @@ const CIRC = 2 * Math.PI * 80;
 function fmt(s){ const m=Math.floor(s/60).toString().padStart(2,'0'), sec=(s%60).toString().padStart(2,'0'); return m+':'+sec; }
 function updPomo(){ pTimeEl.textContent = fmt(pT); pRing.style.strokeDashoffset = CIRC * (1 - pT/pTotal); }
 
+// Небольшой хелпер для перевода (translations живут в scripts.js, доступны через window.CHILL_I18N)
+function t(key){ return window.CHILL_I18N ? window.CHILL_I18N.t(key) : key; }
+
+const modeKeyByMode = { work: 'modeWork', short: 'modeShort', long: 'modeLong' };
+
+function setStartBtnState(running){
+    pStart.dataset.stateKey = running ? 'btnPause' : 'btnStart';
+    pStart.textContent = t(pStart.dataset.stateKey);
+}
+function setModeLabel(mode){
+    pLabel.dataset.modeKey = modeKeyByMode[mode] || 'modeWork';
+    pLabel.textContent = t(pLabel.dataset.modeKey);
+}
+
 pStart.addEventListener('click', () => {
-    if(pRun){ clearInterval(pInt); pRun=false; pStart.textContent='Старт'; pStart.classList.add('start'); }
+    if(pRun){ clearInterval(pInt); pRun=false; setStartBtnState(false); pStart.classList.add('start'); }
     else {
-        pRun=true; pStart.textContent='Пауза';
+        pRun=true; setStartBtnState(true);
         pInt = setInterval(() => {
             if(pT>0){ pT--; updPomo(); }
-            else { clearInterval(pInt); pRun=false; pStart.textContent='Старт';
+            else { clearInterval(pInt); pRun=false; setStartBtnState(false);
                 if('Notification' in window && Notification.permission==='granted'){
-                    new Notification('Chill Time', {body: pMode==='work'?'Время отдохнуть!':'Время работать!'});
+                    new Notification(t('notifTitle'), {body: pMode==='work'?t('notifBreak'):t('notifWork')});
                 }
             }
         }, 1000);
     }
 });
-document.getElementById('pomoReset').addEventListener('click', () => { clearInterval(pInt); pRun=false; pStart.textContent='Старт'; pT=pTotal; updPomo(); });
+document.getElementById('pomoReset').addEventListener('click', () => { clearInterval(pInt); pRun=false; setStartBtnState(false); pT=pTotal; updPomo(); });
 document.querySelectorAll('.pomo-mode').forEach(b => {
     b.addEventListener('click', () => {
         document.querySelectorAll('.pomo-mode').forEach(x=>x.classList.remove('active')); b.classList.add('active');
-        clearInterval(pInt); pRun=false; pStart.textContent='Старт';
+        clearInterval(pInt); pRun=false; setStartBtnState(false);
         pMode=b.dataset.m; pTotal=parseInt(b.dataset.t)*60; pT=pTotal;
-        pLabel.textContent = pMode==='work'?'Фокус':pMode==='short'?'Короткий перерыв':'Длинный перерыв';
+        setModeLabel(pMode);
         updPomo();
     });
 });
 if('Notification' in window) Notification.requestPermission();
+setStartBtnState(false);
+setModeLabel(pMode);
 updPomo();
+
+// Обновляем динамический текст (кнопка старт/пауза, лейбл режима, экран окончания игры 2048)
+// при смене языка через переключатель флагов.
+document.addEventListener('chillLanguageChange', () => {
+    setStartBtnState(pRun);
+    setModeLabel(pMode);
+    if (elO.classList.contains('show')) {
+        elOT.textContent = elOT.dataset.won === '1'
+            ? t('winText')
+            : t('gameOverScore') + s2048;
+    }
+});
 
 // --- 2048 ---
 let b2048=[], s2048=0;
@@ -516,7 +544,7 @@ function move2048(dir){
     else if(dir==='up'){ for(let c=0;c<4;c++){ let col=[b2048[0][c],b2048[1][c],b2048[2][c],b2048[3][c]]; col=slide2048(col); for(let r=0;r<4;r++)b2048[r][c]=col[r]; } }
     else if(dir==='down'){ for(let c=0;c<4;c++){ let col=[b2048[0][c],b2048[1][c],b2048[2][c],b2048[3][c]]; col=slide2048(col.reverse()).reverse(); for(let r=0;r<4;r++)b2048[r][c]=col[r]; } }
     for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(b2048[r][c]!==prev[r][c])moved=true;
-    if(moved){ add2048(); elS.textContent=s2048; draw2048(); if(isOver2048()){ elOT.textContent='Игра окончена! Счёт: '+s2048; elO.classList.add('show'); } if(hasWon2048()){ elOT.textContent='🎉 Победа! 2048!'; elO.classList.add('show'); } }
+    if(moved){ add2048(); elS.textContent=s2048; draw2048(); if(isOver2048()){ elOT.dataset.won='0'; elOT.textContent=t('gameOverScore')+s2048; elO.classList.add('show'); } if(hasWon2048()){ elOT.dataset.won='1'; elOT.textContent=t('winText'); elO.classList.add('show'); } }
 }
 function isOver2048(){ for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(b2048[r][c]===0)return false; for(let r=0;r<4;r++)for(let c=0;c<4;c++){if(c<3&&b2048[r][c]===b2048[r][c+1])return false;if(r<3&&b2048[r][c]===b2048[r+1][c])return false;} return true; }
 function hasWon2048(){ for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(b2048[r][c]===2048)return true; return false; }
