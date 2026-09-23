@@ -332,6 +332,7 @@ header {
 </head>
 <body>
 <div id="scene-background" aria-hidden="true"></div>
+<canvas id="weather-effects" aria-hidden="true" hidden></canvas>
 <div id="bg-loader" aria-hidden="true"></div>
 <header>
 <div class="site-brand"><button id="theme-toggle" class="theme-toggle brand-mark" type="button" aria-label="Ночной режим" aria-pressed="false">☾</button><a href="/" target="_self">chill time</a><span class="brand-note">your quiet corner</span></div>
@@ -411,6 +412,10 @@ header {
     <div id="weather" style="max-width:420px;margin:0 auto;padding:0 16px;">
         <p data-i18n="weatherLoading">Загрузка погоды...</p>
     </div>
+    <div class="weather-effects-control">
+        <label><input id="weather-effects-toggle" type="checkbox" checked> <span data-i18n="effectsLabel">Эффекты погоды</span></label>
+        <p id="weather-effects-note"></p>
+    </div>
 </div>
 
 <div class="chill-section" id="sounds-tab">
@@ -459,6 +464,7 @@ allow="encrypted-media"></iframe>
 </footer>
 
 <script src="/main/scripts/scripts.js"></script>
+<script src="/main/scripts/weather-effects.js"></script>
 <script src="/main/scripts/scenes.js"></script>
 <script src="/main/scripts/ambience.js"></script>
 <script src="/main/scripts/motivation.js"></script>
