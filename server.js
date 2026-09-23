@@ -7,7 +7,7 @@ function createApp({ apiKey = process.env.OPENWEATHER_KEY, get = https.get, time
   app.disable('x-powered-by');
   app.get('/', (_, res) => res.sendFile(path.join(__dirname, 'index.html')));
   app.get('/manifest.json', (_, res) => res.sendFile(path.join(__dirname, 'manifest.json')));
-  for (const directory of ['css', 'scripts', 'img']) {
+  for (const directory of ['css', 'scripts', 'img', 'audio']) {
     app.use(`/main/${directory}`, express.static(path.join(__dirname, 'main', directory), { dotfiles: 'deny', index: false }));
   }
   app.get('/api/weather', (req, res) => {

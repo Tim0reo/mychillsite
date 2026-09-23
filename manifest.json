@@ -3,8 +3,8 @@
   "short_name": "Chill",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a1a",
-  "theme_color": "#ff4444",
+  "background_color": "#201b32",
+  "theme_color": "#c9b0e9",
   "icons": [
     { "src": "/main/img/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/main/img/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }

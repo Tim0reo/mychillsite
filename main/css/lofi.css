@@ -1,0 +1,140 @@
+/* Anime lo-fi theme. Loaded after the original component styles. */
+:root {color-scheme:dark;--text:#f8f2ed;--muted:#cec4dc;--accent:#c8b4ef;--border:rgba(235,220,255,.18);--panel:rgba(30,24,49,.76)}
+* {box-sizing:border-box}
+body {margin:0;min-height:100svh;padding:0 24px 180px;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:#201b32;transition:none;isolation:isolate}
+body::before {content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(17,14,32,.38),rgba(23,17,35,.14) 45%,rgba(17,13,26,.73));pointer-events:none}
+body.bg-loaded {background-color:#201b32}
+header {position:relative;height:88px;min-height:88px;padding:0;display:flex;justify-content:space-between;align-items:center;background:none;max-width:1440px;margin:auto;z-index:5}
+.site-brand {display:flex;align-items:center;gap:12px;color:#f6eee9;font-size:18px;letter-spacing:-.5px;text-decoration:none;font-weight:650}
+.brand-mark {display:grid;place-items:center;width:37px;height:37px;border:1px solid var(--border);border-radius:13px;background:rgba(218,194,250,.09);color:#eed1ab;font-size:24px}
+.brand-note {font-size:10px;letter-spacing:3px;color:#c1b6d0;margin-left:12px;text-transform:uppercase;font-weight:400}
+.marquee-container {display:none}
+#language-selector {position:absolute!important;top:25px!important;right:24px!important;gap:4px!important;z-index:20!important}
+#language-selector button {font-size:18px!important;padding:6px!important;border-radius:8px!important;background:rgba(28,23,42,.35)!important}
+.lofi-hero {text-align:center;margin:clamp(36px,9vh,110px) auto 30px;max-width:760px}
+.lofi-eyebrow {display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e5d6f0;margin:0 0 20px}
+.lofi-eyebrow::before {content:"";width:6px;height:6px;border-radius:50%;background:#d8c1a1;box-shadow:0 0 12px #d8c1a166}
+#id_clock,body.chill-tab-open #id_clock {display:block;position:static;transform:none;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:clamp(58px,8.5vw,112px);font-weight:250;line-height:1.1;letter-spacing:-5px;font-variant-numeric:tabular-nums;color:#fff7f2;text-shadow:0 3px 32px #160e2855;margin:0}
+.lofi-hero h1 {font-size:clamp(19px,2.3vw,28px);font-weight:400;letter-spacing:-.6px;margin:24px 0 9px}
+.lofi-hero p {font-size:13px;line-height:1.8;color:#dfd3e4;margin:0}
+.chill-tabs {position:relative;inset:auto;transform:none;flex-direction:row;width:fit-content;max-width:100%;margin:28px auto;padding:6px;gap:5px;border:1px solid var(--border);border-radius:17px;background:rgba(28,23,44,.6);backdrop-filter:blur(14px);z-index:4}
+.chill-tab {width:auto;min-width:115px;padding:13px 20px;border:0;border-radius:11px;font-size:13px;font-weight:500;color:#e1d7e8;background:transparent;box-shadow:none;white-space:nowrap}
+.chill-tab:hover {background:rgba(227,207,255,.09);transform:none}
+.chill-tab.active {color:#272035;background:#d8c6ed;box-shadow:0 3px 15px #0002}
+.chill-section {position:relative;width:100%;max-width:430px;padding:0;margin:0 auto 24px;z-index:2}
+.chill-card,#weather .weather-container {background:var(--panel)!important;border:1px solid var(--border);border-radius:24px!important;backdrop-filter:blur(18px);box-shadow:0 18px 60px #100c2538;padding:26px!important}
+body.chill-tab-open .lofi-hero {margin:20px auto 18px}
+body.chill-tab-open #id_clock {font-size:48px;letter-spacing:-2px}
+body.chill-tab-open .lofi-hero h1,body.chill-tab-open .lofi-hero p,body.chill-tab-open .lofi-eyebrow {display:none}
+.pomo-time {font-weight:450;text-shadow:none;font-variant-numeric:tabular-nums}
+.pomo-label,.pomo-label span {color:#d9cee7}
+.pomo-btn.start,.g2048-over-btn {background:#d8c6ed;color:#2b2338;box-shadow:none}
+.pomo-btn.start:hover {box-shadow:0 5px 20px #c3ace126}
+.pomo-mode {color:#d0c3de;padding:9px 10px}
+.pomo-mode.active {background:#85709866;border:1px solid #c6aed44d}
+.g2048-title {color:#e0c9f2;text-shadow:none}
+.g2048-score-box,.g2048-board {background:rgba(197,176,220,.1);border-color:var(--border)}
+.g2048-dpad-btn {background:#88709844;border-color:var(--border);color:#eee2f7}
+#weather {padding:0!important}
+#weather .weather-container {margin:0!important;max-width:100%!important;color:#f5eff9!important}
+#weather-form {flex-wrap:wrap;gap:8px}
+#weather-form input {min-width:0;width:100%;margin:0;font-size:16px}
+#weather-form button,#show-city-search {background:#9c85b855!important;color:#f5eafa!important;border:1px solid var(--border)!important;border-radius:9px!important}
+#music-player {position:fixed;left:30px;bottom:66px;width:310px;height:114px;max-width:none;transform:none;background:rgba(30,24,49,.7);border:1px solid var(--border);border-radius:16px;padding:10px 8px 0;box-shadow:none;backdrop-filter:blur(12px);z-index:4}
+.music-caption {font-size:9px;letter-spacing:2px;color:#dac9e4;margin:0 8px 8px}
+#spotify-embed {height:80px;display:block;border-radius:10px}
+.falling-gifs-button {top:auto;right:30px;bottom:88px;background:rgba(40,29,57,.67);border:1px solid var(--border);box-shadow:none;border-radius:12px;padding:13px 18px;font-size:12px;font-weight:500;backdrop-filter:blur(10px);z-index:4}
+.falling-gifs-button:hover {background:rgba(97,75,124,.8);box-shadow:none;transform:translateY(-2px)}
+.footer {left:0;bottom:0;width:100%;background:linear-gradient(transparent,#17112188);padding:22px 24px;display:flex;justify-content:center;gap:24px;font-size:11px;letter-spacing:.5px;z-index:3}
+.footer span a {margin:0;color:#dacde0;font-size:11px}
+#bg-loader {border-top-color:#d8c6ed}
+button:focus-visible,a:focus-visible,input:focus-visible {outline:2px solid #edcda4;outline-offset:4px}
+@media(min-width:1700px){.lofi-hero{margin-top:15vh}}
+@media(max-width:700px){
+ body {padding:0 18px 28px}
+ header {height:78px;min-height:78px}
+ .brand-note {display:none}
+ #language-selector {top:22px!important;right:12px!important}
+ .site-brand {font-size:16px;gap:8px}
+ .brand-mark {width:30px;height:30px;font-size:20px;border-radius:10px}
+ .lofi-hero {margin:60px auto 30px}
+ #id_clock {font-size:clamp(50px,12vw,78px);letter-spacing:-3px}
+ .lofi-hero h1 {margin-top:20px;font-size:22px}
+ .lofi-hero p {font-size:12px;max-width:270px;margin:auto}
+ .lofi-eyebrow {font-size:9px;letter-spacing:2px}
+ .chill-tabs {width:100%;gap:2px;margin:25px auto;max-width:400px}
+ .chill-tab {min-width:0;flex:1;padding:12px 5px;font-size:12px}
+ .chill-card,#weather .weather-container {padding:20px!important}
+ .pomo-modes {gap:5px}
+ .pomo-mode {font-size:11px;padding:9px 7px}
+ #music-player {display:block;position:relative;inset:auto;transform:none;width:100%;max-width:400px;height:114px;margin:35px auto 18px}
+ .falling-gifs-button,body.chill-tab-open .falling-gifs-button {display:block;position:relative;inset:auto;width:fit-content;margin:24px auto;font-size:12px}
+ .footer {position:relative;padding:22px 0 8px;background:none;gap:24px}
+ body.chill-tab-open .lofi-hero {margin-top:20px}
+ .g2048-board {max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Longer tools scroll as a page, so music and footer never cover the game. */
+body.chill-tab-open {padding-bottom:28px}
+body.chill-tab-open #music-player {position:relative;inset:auto;transform:none;margin:24px auto;width:min(100%,400px)}
+body.chill-tab-open .falling-gifs-button {position:relative;inset:auto;margin:24px auto;display:block;width:fit-content}
+body.chill-tab-open .footer {position:relative;background:none;padding-bottom:0}
+
+/* The night palette changes the room lighting as well as the controls. */
+body.dark-theme {--panel:rgba(18,27,50,.86);--border:rgba(165,189,233,.2);--muted:#becce5;background-color:#111a32}
+body.dark-theme::before {background:linear-gradient(180deg,rgba(10,21,53,.72),rgba(15,27,60,.48) 45%,rgba(7,15,34,.88))}
+body.dark-theme .chill-tabs {background:rgba(15,27,49,.8)}
+body.dark-theme .chill-tab.active,body.dark-theme .pomo-btn.start {background:#bdcdee;color:#18243b}
+body.dark-theme .brand-mark {color:#c2d8ff;background:rgba(137,175,238,.1)}
+.theme-toggle {position:fixed;top:28px;right:155px;z-index:21;width:34px;height:34px;padding:0;border:1px solid var(--border);border-radius:10px;background:rgba(28,23,42,.45);color:#f4dfb9;font-size:20px;line-height:1;cursor:pointer}
+.theme-toggle:hover {background:rgba(128,111,158,.4)}
+#music-player {height:104px;background:transparent;border:0;padding:0;backdrop-filter:none;box-shadow:none;overflow:visible}
+.music-caption {margin:0 0 10px 3px;line-height:14px;text-shadow:0 1px 5px #171121}
+@media(max-width:700px){.theme-toggle{top:25px;right:121px;width:30px;height:30px;font-size:18px}}
+
+/* The crescent in the wordmark is the actual theme control. */
+.site-brand a {color:inherit;text-decoration:none}
+.site-brand .theme-toggle {position:static;inset:auto;flex-shrink:0;width:37px;height:37px;border-radius:13px;font-size:24px}
+.ambience {width:min(100%,380px);margin:24px auto 35px;padding:17px 20px;border:1px solid var(--border);border-radius:18px;background:var(--panel);backdrop-filter:blur(12px)}
+.ambience-heading {font-size:10px;letter-spacing:1.6px;color:#d4c7df;margin:0 0 10px;text-transform:uppercase}
+.ambience-track {display:flex;align-items:center;gap:20px;margin-top:7px}
+.ambience-track button {display:flex;align-items:center;gap:9px;min-width:105px;min-height:38px;border:1px solid transparent;border-radius:9px;color:#d4c7df;background:transparent;font:inherit;font-size:12px;cursor:pointer;padding:5px 8px;text-align:left}
+.ambience-track button[aria-pressed="true"] {background:#d8c6ed;color:#272035}
+.ambience-track input {width:100%;min-width:0;height:30px;margin:0;accent-color:#c8b4ef;cursor:pointer}
+#ambience-status {font-size:12px;line-height:1.5;margin:10px 0 0}
+.sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:700px){.site-brand .theme-toggle{width:30px;height:30px;font-size:20px}.ambience{padding:15px 16px}}
+
+#sounds-tab .ambience {width:100%;margin:0 auto 24px}
+.sound-hint {color:#d4c7df;font-size:12px;line-height:1.7;margin:0 0 18px}
+.ambience-track {gap:10px}
+.ambience-track output {min-width:36px;text-align:right;font-size:11px;color:#d4c7df;font-variant-numeric:tabular-nums}
+.sound-icon {font-size:13px;min-width:14px}
+.chill-tab[data-tab="sounds-tab"].has-audio::after {content:" •";color:#e9cc98}
+@media(max-width:700px){.chill-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.chill-tab{width:100%}}
+
+/* Two still-image layers crossfade only when the chosen scene changes. */
+#scene-background {position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;background:#201b32}
+#scene-background img {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity 1s ease}
+#scene-background img.visible {opacity:1}
+body[data-scene="morning"]::before,body[data-scene="day"]::before {background:linear-gradient(180deg,rgba(20,24,42,.44),rgba(24,24,43,.3) 45%,rgba(20,17,35,.65))}
+body[data-scene="night"]::before {background:linear-gradient(180deg,rgba(10,21,53,.23),rgba(15,27,60,.12) 45%,rgba(7,15,34,.55))}
+.scene-controls {max-width:470px;margin:20px auto 0;text-align:center;color:#eee3f2;font-size:12px}
+.scene-controls label {margin-right:10px;text-shadow:0 1px 5px #171121}
+#scene-select {font:inherit;color:#f7effa;background:#292239df;border:1px solid var(--border);border-radius:10px;padding:9px 12px;cursor:pointer;max-width:100%}
+.scene-schedule {font-size:10px;line-height:1.7;color:#e1d5e8;text-shadow:0 1px 5px #171121;margin:10px auto 0;max-width:360px}
+#scene-status {font-size:12px;line-height:1.6}
+@media (prefers-reduced-motion:reduce){#scene-background img{transition:none}}
+@media(min-width:701px) and (max-width:1050px){#music-player{position:relative;inset:auto;margin:30px auto;width:310px}.falling-gifs-button{position:relative;inset:auto;display:block;margin:24px auto}.footer{position:relative;background:none}body{padding-bottom:28px}}
+
+/* Scene settings live with the footer links, away from the clock. */
+.footer {flex-direction:column;align-items:center;gap:15px}
+.footer .scene-controls {margin:0;width:100%;letter-spacing:normal}
+.footer-links {display:flex;justify-content:center;flex-wrap:wrap;gap:24px}
+.footer .scene-schedule {max-width:500px}
+@media(min-width:1051px){
+ body:not(.chill-tab-open){padding-bottom:250px}
+ body:not(.chill-tab-open) #music-player{bottom:175px}
+ body:not(.chill-tab-open) .falling-gifs-button{bottom:195px}
+}
+@media(max-width:700px){.footer .scene-controls{padding:0 4px}.footer-links{gap:20px}}

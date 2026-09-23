@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ff4444">
+<meta name="theme-color" content="#c9b0e9">
 <link rel="stylesheet" href="/main/css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<link rel="icon" href="/main/img/main-icon.jpg" type="image/x-icon">
+<link rel="icon" href="/main/img/lofi-favicon.svg" type="image/svg+xml" sizes="any">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <title>Chill Time</title>
 
@@ -172,7 +172,7 @@ header {
     transition: all 0.3s; font-family: inherit;
 }
 .pomo-btn.start {
-    background: linear-gradient(135deg, #ff4444, #cc0033);
+    background: linear-gradient(135deg, #c9b0e9, #edc89e);
     color: #fff;
     box-shadow: 0 0 15px rgba(255,0,0,0.3);
 }
@@ -197,7 +197,7 @@ header {
 
 /* Game 2048 */
 .g2048-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-.g2048-title { font-size: 1.3rem; font-weight: 800; color: #ff4444; text-shadow: 0 0 10px rgba(255,0,0,0.4); }
+.g2048-title { font-size: 1.3rem; font-weight: 800; color: #c9b0e9; text-shadow: 0 0 10px rgba(255,0,0,0.4); }
 .g2048-score-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 14px; text-align: center; }
 .g2048-score-label { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
 .g2048-score { font-size: 1.1rem; font-weight: 800; color: #fff; }
@@ -226,7 +226,7 @@ header {
 .g2048-cell[data-v="256"] { background: rgba(150,80,255,0.5); color: #d0b0ff; font-size: 1rem; }
 .g2048-cell[data-v="512"] { background: rgba(150,80,255,0.6); color: #e8d0ff; font-size: 1rem; }
 .g2048-cell[data-v="1024"] { background: linear-gradient(135deg, rgba(255,68,68,0.5), rgba(150,80,255,0.5)); color: #fff; font-size: 0.8rem; }
-.g2048-cell[data-v="2048"] { background: linear-gradient(135deg, #ff4444, #ff8800); color: #fff; font-size: 0.8rem; box-shadow: 0 0 20px rgba(255,68,68,0.5); }
+.g2048-cell[data-v="2048"] { background: linear-gradient(135deg, #c9b0e9, #ff8800); color: #fff; font-size: 0.8rem; box-shadow: 0 0 20px rgba(255,68,68,0.5); }
 .g2048-over {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.85); display: none;
@@ -234,10 +234,10 @@ header {
     border-radius: 10px; z-index: 10;
 }
 .g2048-over.show { display: flex; }
-.g2048-over-text { font-size: 1.2rem; font-weight: 800; color: #ff4444; margin-bottom: 12px; text-align: center; padding: 0 10px; }
+.g2048-over-text { font-size: 1.2rem; font-weight: 800; color: #c9b0e9; margin-bottom: 12px; text-align: center; padding: 0 10px; }
 .g2048-over-btn {
     padding: 10px 24px; border: none; border-radius: 8px;
-    background: linear-gradient(135deg, #ff4444, #cc0033);
+    background: linear-gradient(135deg, #c9b0e9, #edc89e);
     color: #fff; font-weight: 700; cursor: pointer; font-family: inherit;
 }
 .g2048-dpad {
@@ -249,10 +249,10 @@ header {
     border-radius: 10px; color: #fff; font-size: 1.3rem; cursor: pointer;
     display: flex; align-items: center; justify-content: center; transition: all 0.15s;
 }
-.g2048-dpad-btn:active { background: #ff4444; transform: scale(0.95); }
+.g2048-dpad-btn:active { background: #c9b0e9; transform: scale(0.95); }
 .g2048-dpad-btn:nth-child(2) { grid-column: 2; }
 .g2048-dpad-btn:nth-child(3) { grid-column: 1; grid-row: 2; }
-.g2048-dpad-btn:nth-child(4) { grid-column: 2; grid-row: 2; background: linear-gradient(135deg, #ff4444, #cc0033); font-size: 0.65rem; font-weight: 700; }
+.g2048-dpad-btn:nth-child(4) { grid-column: 2; grid-row: 2; background: linear-gradient(135deg, #c9b0e9, #edc89e); font-size: 0.65rem; font-weight: 700; }
 .g2048-dpad-btn:nth-child(5) { grid-column: 3; grid-row: 2; }
 .g2048-dpad-btn:nth-child(6) { grid-column: 2; grid-row: 3; }
 .g2048-hint { text-align: center; font-size: 0.7rem; color: #666; margin-top: 10px; }
@@ -327,29 +327,32 @@ header {
     .marquee-text { font-size: 16px; }
 }
 </style>
+<link rel="stylesheet" href="/main/css/lofi.css">
 <base target="_blank">
 </head>
 <body>
+<div id="scene-background" aria-hidden="true"></div>
 <div id="bg-loader" aria-hidden="true"></div>
 <header>
-<div class="marquee-container">
-<div class="marquee-text">NEVER GIVE UP!</div>
-<div class="marquee-text">ぜったいあきらめないで!</div>
-<div class="marquee-text">НИКОГДА НЕ СДАВАЙСЯ!</div>
-</div>
+<div class="site-brand"><button id="theme-toggle" class="theme-toggle brand-mark" type="button" aria-label="Ночной режим" aria-pressed="false">☾</button><a href="/" target="_self">chill time</a><span class="brand-note">your quiet corner</span></div>
+</header>
+<section class="lofi-hero" aria-label="Chill Time">
+<div class="lofi-eyebrow" data-i18n="lofiEyebrow">ТВОЙ ТИХИЙ УГОЛОК</div>
+<div id="id_clock"></div>
+<h1 data-i18n="lofiTitle">Побудь здесь. Выдохни.</h1>
+<p data-i18n="lofiSubtitle">Немного музыки, немного мечтаний.<br>И время только для себя.</p>
+</section>
 <nav class="chill-tabs" aria-label="Разделы сайта" data-i18n-aria-label="navAriaLabel">
     <button class="chill-tab" data-tab="pomo" data-i18n="navPomo">⏱️ Помодоро</button>
     <button class="chill-tab" data-tab="g2048" data-i18n="navGame">🎮 2048</button>
     <button class="chill-tab" data-tab="weather-tab" data-i18n="navWeather">🌤️ Погода</button>
+    <button class="chill-tab" data-tab="sounds-tab" data-i18n="navSounds">♫ Звуки</button>
 </nav>
-</header>
-
-<div id="id_clock"></div>
 
 <!-- Pomodoro Section -->
 <div class="chill-section" id="pomo">
     <div class="chill-card">
-        <svg width="0" height="0"><defs><linearGradient id="pomoGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ff4444"/><stop offset="100%" style="stop-color:#cc0033"/></linearGradient></defs></svg>
+        <svg width="0" height="0"><defs><linearGradient id="pomoGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#c9b0e9"/><stop offset="100%" style="stop-color:#edc89e"/></linearGradient></defs></svg>
         <div class="pomo-ring-wrap">
             <svg viewBox="0 0 180 180"><circle class="pomo-ring-bg" cx="90" cy="90" r="80"/><circle class="pomo-ring-fill" cx="90" cy="90" r="80" id="pomoRing"/></svg>
             <div class="pomo-time" id="pomoTime">25:00</div>
@@ -408,23 +411,54 @@ header {
     </div>
 </div>
 
+<div class="chill-section" id="sounds-tab">
+<section class="ambience" aria-label="Фоновые звуки" data-i18n-aria-label="soundTitle">
+    <p class="ambience-heading" data-i18n="soundTitle">Звуки для настроения</p>
+    <p class="sound-hint" data-i18n="soundHint">Нажми ▶ возле звука, затем настрой громкость.</p>
+    <div class="ambience-track">
+        <button type="button" data-ambience="rain" aria-pressed="false"><span class="sound-icon" aria-hidden="true">▶</span> <span data-i18n="soundRain">Дождь</span></button>
+        <label class="sr-only" for="rain-volume" data-i18n="rainVolume">Громкость дождя</label>
+        <input id="rain-volume" type="range" min="0" max="100" value="50">
+        <output for="rain-volume">50%</output>
+    </div>
+    <p id="ambience-status" role="status" hidden></p>
+</section>
+</div>
+
 <button id="falling-gifs-btn" class="falling-gifs-button" data-i18n="fallingBtn" data-i18n-title="fallingBtnTitle" title="Нажмите для падающих GIF-ов">❄️ Посыпать 😈</button>
 
 <div id="music-player">
+<p class="music-caption">♫ &nbsp; LO-FI RADIO</p>
 <iframe id="spotify-embed" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn"
-frameborder="0" allowtransparency="true"
+title="Spotify lo-fi playlist" frameborder="0" allowtransparency="true"
 allow="encrypted-media"></iframe>
 </div>
 
 <footer>
 <div class="footer">
+<div class="scene-controls">
+<label for="scene-select" data-i18n="sceneLabel">Время суток</label>
+<select id="scene-select" aria-describedby="scene-schedule">
+<option value="auto" data-i18n="sceneAuto">Авто · по часам</option>
+<option value="morning" data-i18n="sceneMorning">Утро</option>
+<option value="day" data-i18n="sceneDay">День</option>
+<option value="evening" data-i18n="sceneEvening">Вечер</option>
+<option value="night" data-i18n="sceneNight">Ночь</option>
+</select>
+<p class="scene-schedule" id="scene-schedule" data-i18n="sceneSchedule">Авто: утро 06–11 · день 11–17 · вечер 17–21 · ночь 21–06. По времени устройства.</p>
+<p id="scene-status" role="status" hidden></p>
+</div>
+<div class="footer-links">
 <span><a href="https://ru.pinterest.com/Zero_Town/"><i class="fab fa-pinterest"></i> Pinterest</a></span>
 <span><a href="https://open.spotify.com/user/315spjejqyxmzqy7uiplog6tpdbm?si=468e292cebf34c63"><i class="fab fa-spotify"></i> Spotify</a></span>
 <span><a href="https://www.instagram.com/iplaysol0/"><i class="fab fa-instagram"></i> Instagram</a></span>
 </div>
+</div>
 </footer>
 
 <script src="/main/scripts/scripts.js"></script>
+<script src="/main/scripts/scenes.js"></script>
+<script src="/main/scripts/ambience.js"></script>
 
 <!-- ===== NEW: Inline scripts for Pomodoro & 2048 ===== -->
 <script>

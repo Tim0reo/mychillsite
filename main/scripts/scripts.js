@@ -2,40 +2,6 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
     window.__CHILL_SITE_BOOTSTRAPPED__ = true;
 
     document.addEventListener("DOMContentLoaded", function() {
-    // Фон в зависимости от времени суток
-    function changeBackground() {
-        let now = new Date();
-        let hour = now.getHours();
-        let backgrounds = {
-            morning: "main/img/morning.jpg",
-            day: "main/img/evening.jpg",
-            night: "main/img/night.jpg"
-        };
-
-        let backgroundImage =
-            hour >= 6 && hour < 12 ? backgrounds.morning :
-            hour >= 12 && hour < 18 ? backgrounds.day :
-            backgrounds.night;
-
-        // Preload to avoid white flash before image is ready
-        const img = new Image();
-        img.onload = () => {
-            document.body.style.backgroundImage = `url('${backgroundImage}')`;
-            document.body.style.backgroundSize = "cover";
-            document.body.style.backgroundPosition = "center";
-            document.body.style.backgroundAttachment = "fixed";
-            document.body.classList.add('bg-loaded');
-            const loader = document.getElementById('bg-loader');
-            if (loader) {
-                setTimeout(() => loader.remove(), 350);
-            }
-        };
-        img.src = backgroundImage;
-    }
-
-    changeBackground();
-    setInterval(changeBackground, 60000);
-
     // Часы...=)
     function digitalClock() {
         let date = new Date();
@@ -52,6 +18,31 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
     // Объект с переводами....
     const translations = {
         ru: {
+            sceneLabel: "Время суток",
+            sceneAuto: "Авто · по часам",
+            sceneMorning: "Утро",
+            sceneDay: "День",
+            sceneEvening: "Вечер",
+            sceneNight: "Ночь",
+            sceneLoading: "Загружаем сцену…",
+            sceneError: "Не удалось загрузить фон. Попробуйте выбрать его ещё раз.",
+            sceneSchedule: "Авто: утро 06–11 · день 11–17 · вечер 17–21 · ночь 21–06. По времени устройства.",
+
+            navSounds: "♫ Звуки",
+            soundHint: "Нажми ▶ возле звука, затем настрой громкость.",
+            soundPlay: "Включить",
+            soundStop: "Выключить",
+
+            soundTitle: "Звуки для настроения",
+            soundRain: "Дождь",
+            rainVolume: "Громкость дождя",
+            soundError: "Не удалось включить звук. Попробуйте ещё раз.",
+
+            nightMode: "Ночной режим",
+            lofiEyebrow: "ТВОЙ ТИХИЙ УГОЛОК",
+            lofiTitle: "Побудь здесь. Выдохни.",
+            lofiSubtitle: "Немного музыки, немного мечтаний. И время только для себя.",
+
             // Погода
             searchCity: "Найти город",
             weatherPlaceholder: "Введите город",
@@ -94,6 +85,31 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
             fallingBtnTitle: "Нажмите для падающих GIF-ов"
         },
         en: {
+            sceneLabel: "Time of day",
+            sceneAuto: "Auto · local time",
+            sceneMorning: "Morning",
+            sceneDay: "Day",
+            sceneEvening: "Evening",
+            sceneNight: "Night",
+            sceneLoading: "Loading scene…",
+            sceneError: "Could not load the scene. Please select it again.",
+            sceneSchedule: "Auto: morning 06–11 · day 11–17 · evening 17–21 · night 21–06. Device time.",
+
+            navSounds: "♫ Sounds",
+            soundHint: "Press ▶ next to a sound, then adjust its volume.",
+            soundPlay: "Play",
+            soundStop: "Stop",
+
+            soundTitle: "Set the mood",
+            soundRain: "Rain",
+            rainVolume: "Rain volume",
+            soundError: "Could not start audio. Please try again.",
+
+            nightMode: "Night mode",
+            lofiEyebrow: "YOUR QUIET CORNER",
+            lofiTitle: "Stay a while. Breathe.",
+            lofiSubtitle: "A little music, a little daydreaming. Some time just for you.",
+
             searchCity: "Find City",
             weatherPlaceholder: "Enter city",
             ok: "OK",
@@ -131,6 +147,31 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
             fallingBtnTitle: "Click for falling GIFs"
         },
         jp: {
+            sceneLabel: "時間帯",
+            sceneAuto: "自動・現地時間",
+            sceneMorning: "朝",
+            sceneDay: "昼",
+            sceneEvening: "夕方",
+            sceneNight: "夜",
+            sceneLoading: "背景を読み込み中…",
+            sceneError: "背景を読み込めません。もう一度選択してください。",
+            sceneSchedule: "自動：朝6–11時・昼11–17時・夕方17–21時・夜21–6時。端末の時刻。",
+
+            navSounds: "♫ 音",
+            soundHint: "▶で再生し、音量を調整してください。",
+            soundPlay: "再生",
+            soundStop: "停止",
+
+            soundTitle: "くつろぎの音",
+            soundRain: "雨",
+            rainVolume: "雨の音量",
+            soundError: "音声を再生できません。もう一度お試しください。",
+
+            nightMode: "ナイトモード",
+            lofiEyebrow: "自分だけの静かな場所",
+            lofiTitle: "ひと息ついて、ゆっくり。",
+            lofiSubtitle: "音楽を聴いて、少し夢を見て。自分だけの時間。",
+
             searchCity: "都市を探す",
             weatherPlaceholder: "都市を入力",
             ok: "OK",
@@ -789,19 +830,6 @@ document.addEventListener("DOMContentLoaded", function() {
             player.style.display = 'none';
         }
     });
-});
-
-// Переключение темы
-function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-}
-  
-// Применяем сохраненную тему при загрузке
-document.addEventListener("DOMContentLoaded", function() {
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-theme');
-    }
 });
 
 // Falling GIFs animation (triggered by button click) redaction Gif
