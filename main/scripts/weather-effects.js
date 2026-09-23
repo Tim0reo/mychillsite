@@ -5,7 +5,7 @@
     const toggle = document.getElementById('weather-effects-toggle');
     const note = document.getElementById('weather-effects-note');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    let enabled = true, effect = 'none', frame = 0, last = 0, width, height, particles = [];
+    let activated = false, enabled = true, effect = 'none', frame = 0, last = 0, width, height, particles = [];
     try {enabled = localStorage.getItem('weatherEffects') !== 'off';} catch (_) {}
     toggle.checked = enabled;
     function labels() {
@@ -55,7 +55,7 @@
     function sync() {
         cancelAnimationFrame(frame); frame=0; last=0;
         ctx?.clearRect(0,0,width,height);
-        const running = ctx && enabled && !reduced.matches && !document.hidden && effect !== 'none';
+        const running = ctx && activated && enabled && !reduced.matches && !document.hidden && effect !== 'none';
         canvas.dataset.effect = effect;
         canvas.dataset.running = String(Boolean(running));
         canvas.hidden = !running;
@@ -66,6 +66,9 @@
         const id = Number(event.detail.id);
         effect = id >= 600 && id < 700 ? 'snow' : id >= 200 && id < 600 ? 'rain' : 'none';
         sync();
+    });
+    document.addEventListener('chillTabChange', event => {
+        if (event.detail.tab === 'weather-tab') {activated = true; sync();}
     });
     toggle.addEventListener('change', () => {
         enabled=toggle.checked;

@@ -19,7 +19,7 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
     const translations = {
         ru: {
             effectsLabel: "Эффекты погоды",
-            effectsHint: "Дождь и снег за окном зависят от выбранного города. Звук включается отдельно.",
+            effectsHint: "Эффект включается после открытия погоды и остаётся на фоне до обновления страницы. Звук — отдельно.",
             effectsReduced: "Анимация отключена настройкой уменьшения движения на устройстве.",
 
             quoteShakespeare: "Мы знаем, кто мы, но не знаем, кем можем стать.",
@@ -102,7 +102,7 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
         },
         en: {
             effectsLabel: "Weather effects",
-            effectsHint: "Rain and snow outside follow the selected city. Sound is controlled separately.",
+            effectsHint: "Effects start when you open Weather and stay until the page reloads. Sound is separate.",
             effectsReduced: "Animation is paused by your device’s reduced-motion preference.",
 
             quoteShakespeare: "We know what we are but know not what we may be.",
@@ -180,7 +180,7 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
         },
         jp: {
             effectsLabel: "天気のエフェクト",
-            effectsHint: "選んだ街の天気に合わせて窓の外に雨や雪が降ります。音は別に操作できます。",
+            effectsHint: "天気を開くとエフェクトが始まり、ページを再読み込みするまで続きます。音は別に操作できます。",
             effectsReduced: "端末の視差効果を減らす設定により、アニメーションは停止しています。",
 
             quoteShakespeare: "自分が何者かはわかっていても、何者になれるかはわからない。",

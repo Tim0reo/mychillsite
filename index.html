@@ -489,6 +489,7 @@ function openChillTab(tab) {
     tab.classList.add('active');
     section.classList.add('active');
     document.body.classList.add('chill-tab-open');
+    document.dispatchEvent(new CustomEvent('chillTabChange', {detail: {tab: tab.dataset.tab}}));
 }
 
 document.querySelectorAll('.chill-tab').forEach(tab => {
