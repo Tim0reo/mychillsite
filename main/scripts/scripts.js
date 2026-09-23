@@ -1,4 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
+    window.__CHILL_SITE_BOOTSTRAPPED__ = true;
+
+    document.addEventListener("DOMContentLoaded", function() {
     // Фон в зависимости от времени суток
     function changeBackground() {
         let now = new Date();
@@ -54,6 +57,8 @@ document.addEventListener("DOMContentLoaded", function() {
             weatherPlaceholder: "Введите город",
             ok: "OK",
             cityNotFound: "Город не найден",
+            weatherRateLimit: "Превышен лимит запросов. Попробуйте позже.",
+            weatherUnavailable: "Погода временно недоступна. Попробуйте позже.",
             humidity: "Влажность",
             wind: "Ветер",
             weatherLoading: "Загрузка погоды...",
@@ -93,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function() {
             weatherPlaceholder: "Enter city",
             ok: "OK",
             cityNotFound: "City not found",
+            weatherRateLimit: "Too many requests. Please try again later.",
+            weatherUnavailable: "Weather is unavailable. Please try again later.",
             humidity: "Humidity",
             wind: "Wind",
             weatherLoading: "Loading weather...",
@@ -128,6 +135,8 @@ document.addEventListener("DOMContentLoaded", function() {
             weatherPlaceholder: "都市を入力",
             ok: "OK",
             cityNotFound: "都市が見つかりません",
+            weatherRateLimit: "リクエストが多すぎます。後でもう一度お試しください。",
+            weatherUnavailable: "天気情報を取得できません。後でもう一度お試しください。",
             humidity: "湿度",
             wind: "風",
             weatherLoading: "天気を読み込み中...",
@@ -370,17 +379,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Применяем сохраненный язык при загрузке
         const savedLang = localStorage.getItem('selectedLanguage') || 'ru';
-        changeLanguage(savedLang);
+        applyStaticTranslations(savedLang);
     }
 
     // Функция получения погоды
+    let weatherController;
+    let weatherRequestId = 0;
     async function getWeather(city = "Khabarovsk") {
         // Очищаем город от возможных доп. данных (температуры и т.д.)
+        const requestId = ++weatherRequestId;
+        if (weatherController) weatherController.abort();
+        weatherController = new AbortController();
+        const controller = weatherController;
         const cleanCity = city.split(':')[0].trim();
-    const lang = localStorage.getItem('selectedLanguage') || 'ru';
-        // Запрос теперь идёт к локальному прокси-серверу (/api/weather),
-        // который использует OPENWEATHER_KEY на сервере. API-ключ не хранится в клиентском коде.
-        const url = `https://mychillsite.onrender.com/api/weather?q=${encodeURIComponent(cleanCity)}&lang=${encodeURIComponent(lang)}`;
+        const lang = localStorage.getItem('selectedLanguage') || 'ru';
+        const url = new URL('/api/weather', window.location.origin);
+        url.searchParams.set('q', cleanCity);
+        url.searchParams.set('lang', lang);
 
         // Simple client-side cache (localStorage) with TTL to reduce API calls
         const cacheKey = `weather_cache_${cleanCity.toLowerCase()}_${lang}`;
@@ -404,13 +419,20 @@ document.addEventListener("DOMContentLoaded", function() {
             console.warn('localStorage unavailable', e);
         }
 
+        const timeout = setTimeout(() => controller.abort(), 12000);
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {signal: controller.signal});
+            if (requestId !== weatherRequestId) return;
+            if (!response.ok) {
+                const key = response.status === 404 ? 'cityNotFound' : response.status === 429 ? 'weatherRateLimit' : 'weatherUnavailable';
+                throw new Error(translations[lang][key]);
+            }
             const data = await response.json();
+            if (requestId !== weatherRequestId) return;
 
             if (data.cod === 200) {
                 // Сохраняем последний успешно найденный город
-                localStorage.setItem('lastCity', data.name);
+                try { localStorage.setItem('lastCity', data.name); } catch (_) {}
 
                 // Cache the successful response
                 try {
@@ -422,9 +444,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 await renderWeather(data, lang);
             } else {
-                throw new Error(translations[lang].cityNotFound);
+                throw new Error(translations[lang].weatherUnavailable);
             }
         } catch (error) {
+            if (requestId !== weatherRequestId) return;
+            const errorMessage = [translations[lang].cityNotFound, translations[lang].weatherRateLimit].includes(error.message)
+                ? error.message : translations[lang].weatherUnavailable;
             // Обработка ошибки с учетом языка
             document.getElementById("weather").innerHTML = `
                 <div class="weather-container" style="
@@ -454,7 +479,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                     <div class="weather-info" style="flex: 1;">
                         <div style="font-size: 1.2rem; margin-bottom: 10px;">
-                            ${error.message}
+                            ${errorMessage}
                         </div>
                         <button id="show-city-search" style="
                             padding: 6px 12px;
@@ -509,10 +534,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     getWeather(cityInput.value);
                 });
             }
+        } finally {
+            clearTimeout(timeout);
         }
     }
 
     // Рендер погоды — вынесен, чтобы можно было переиспользовать (и использовать кеш)
+    function escapeWeatherText(value) {
+        const span = document.createElement('span');
+        span.textContent = String(value);
+        return span.innerHTML;
+    }
     async function renderWeather(data, lang) {
     const weatherKey = getWeatherGif(data);
 
@@ -541,10 +573,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 </div>
                 <div class="weather-info" style="flex: 1;">
                     <div style="font-size: 1.4rem; font-weight: bold; margin-bottom: 5px;">
-                        ${data.name}: ${Math.round(data.main.temp)}°C
+                        ${escapeWeatherText(data.name)}: ${Math.round(data.main.temp)}°C
                     </div>
                     <div style="font-size: 1rem; margin-bottom: 8px;">
-                        ${data.weather[0].description}
+                        ${escapeWeatherText(data.weather[0].description)}
                     </div>
                     <div style="display: flex; gap: 15px; font-size: 0.9rem; color: #e0e0e0;">
                         <div>${translations[lang].humidity}: ${data.main.humidity}%</div>
@@ -603,11 +635,11 @@ document.addEventListener("DOMContentLoaded", function() {
         // Try to find best media: MP4 -> WebP -> GIF -> SVG (SVG is last fallback)
         async function resourceExists(url) {
             try {
-                const res = await fetch(url, { method: 'HEAD' });
+                const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
                 return res.ok;
             } catch (e) {
                 try {
-                    const res2 = await fetch(url);
+                    const res2 = await fetch(url, {signal: AbortSignal.timeout(3000)});
                     return res2.ok;
                 } catch (e2) {
                     return false;
@@ -619,6 +651,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // normalize: ensure leading slash
         const candidates = candidatesFromMap.map(p => p.startsWith('/') ? p : `/${p}`);
 
+        const mediaContainer = document.getElementById('weather-media');
         let chosen = null;
         for (const c of candidates) {
             if (await resourceExists(c)) { chosen = c; break; }
@@ -626,7 +659,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (alt !== c && await resourceExists(alt)) { chosen = alt; break; }
         }
 
-        const mediaContainer = document.getElementById('weather-media');
+        if (!mediaContainer.isConnected) return;
         if (!chosen) {
             // As a last resort, try to show the SVG fallback from the mapping (last element)
             const fallbackList = weatherGifs[weatherKey] || weatherGifs["default"];
@@ -703,25 +736,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Первичный запрос погоды
     async function initWeather() {
         // Пробуем получить последний сохраненный город
+        const initialRequestId = weatherRequestId;
         const lastCity = localStorage.getItem('lastCity');
         if (lastCity) {
             await getWeather(lastCity);
         } else {
             // Если нет сохраненного города, пробуем определить по IP
             try {
-                const ipResponse = await fetch('https://ipapi.co/json/');
+                const ipResponse = await fetch('https://ipapi.co/json/', {signal: AbortSignal.timeout(4000)});
                 const ipData = await ipResponse.json();
                 const city = ipData.city || 'Khabarovsk';
-                await getWeather(city);
+                if (weatherRequestId === initialRequestId) await getWeather(city);
             } catch (error) {
                 console.error('Ошибка определения по IP:', error);
-                await getWeather('Khabarovsk');
+                if (weatherRequestId === initialRequestId) await getWeather('Khabarovsk');
             }
         }
     }
 
     initWeather();
-});
+    });
+}
 
 // Музыкальный плеер
 const playlists = {
@@ -771,78 +806,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Falling GIFs animation (triggered by button click) redaction Gif
 function initFallingGifsButton() {
-    // Configuration: customize these settings
-    const fallingGifUrls = [
-        '/main/img/falling_1.gif',      // Add your GIF URLs here
-        '/main/img/falling_2.gif',      // You can add multiple different GIFs
-        '/main/img/falling_3.gif',
-        '/main/img/falling_4.gif',     
-        '/main/img/falling_5.gif',     
-        '/main/img/falling_6.gif',
-        '/main/img/falling_7.gif',      
-        '/main/img/falling_8.gif',      
-        '/main/img/falling_9.gif',
-        '/main/img/falling_10.gif',     
-        '/main/img/falling_11.gif',     
-        '/main/img/falling_12.gif',
-        '/main/img/falling_13.gif',
-        '/main/img/falling_14.gif',
-    ];
-    
-    const durationSeconds = 15;        // How long to spawn GIFs (in seconds)
-    const spawnInterval = 150;         // Spawn a new GIF every 300ms during active period
-    const minFallDuration = 6;         // Minimum fall duration in seconds
-    const maxFallDuration = 12;        // Maximum fall duration in seconds
-    const gifSize = 80;                // Size in pixels (width and height)
-    
+    // Keep the smallest existing animations; avoid downloading multi-megabyte GIFs.
+    const urls = [1, 4, 5, 11, 13].map(n => `/main/img/falling_${n}.gif`);
     const button = document.getElementById('falling-gifs-btn');
-    let isActive = false;
-    let activeTimeout = null;
-    let spawnIntervalId = null;
-    
-    button.addEventListener('click', function() {
-        if (isActive) return; // Prevent multiple clicks while active
-        
-        isActive = true;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const particles = new Set();
+    let interval = null, timeout = null;
+    function stop() {
+        clearInterval(interval); clearTimeout(timeout); interval = null;
+        particles.forEach(node => node.remove()); particles.clear();
+        button.disabled = false;
+    }
+    button.addEventListener('click', () => {
+        if (interval || document.hidden) return;
         button.disabled = true;
-        button.textContent = '✨ Идёт посыпание...';
-        
-        // Start spawning GIFs
-        spawnIntervalId = setInterval(() => {
-            // Random GIF from the list
-            const gifUrl = fallingGifUrls[Math.floor(Math.random() * fallingGifUrls.length)];
-            
-            // Random horizontal position
-            const randomX = Math.random() * (window.innerWidth - gifSize);
-            
-            // Random fall duration
-            const fallDuration = minFallDuration + Math.random() * (maxFallDuration - minFallDuration);
-            
-            // Create falling element
-            const gif = document.createElement('div');
-            gif.className = 'falling-gif';
-            gif.style.backgroundImage = `url('${gifUrl}')`;
-            gif.style.left = randomX + 'px';
-            gif.style.width = gifSize + 'px';
-            gif.style.height = gifSize + 'px';
-            gif.style.animationDuration = fallDuration + 's';
-            
-            document.body.appendChild(gif);
-            
-            // Remove element after animation completes
-            setTimeout(() => {
-                gif.remove();
-            }, fallDuration * 1000);
-        }, spawnInterval);
-        
-        // Stop spawning after duration
-        activeTimeout = setTimeout(() => {
-            clearInterval(spawnIntervalId);
-            isActive = false;
-            button.disabled = false;
-            button.textContent = '❄️ Посыпать 😈';
-        }, durationSeconds * 1000);
+        const spawn = () => {
+            const limit = reducedMotion.matches ? 1 : innerWidth < 600 ? 6 : 10;
+            if (particles.size >= limit) return;
+            const node = document.createElement('div');
+            node.className = 'falling-gif';
+            node.style.backgroundImage = `url('${urls[Math.floor(Math.random()*urls.length)]}')`;
+            node.style.left = Math.random()*Math.max(0, innerWidth-80)+'px';
+            node.style.width = node.style.height = '80px';
+            node.style.animationDuration = '6s';
+            if (reducedMotion.matches) {
+                node.style.animation = 'none';
+                node.style.top = '50%';
+                node.style.backgroundImage = "url('/main/img/weather-gifs/snow.svg')";
+            }
+            particles.add(node); document.body.appendChild(node);
+            node.addEventListener('animationend', () => {node.remove(); particles.delete(node);}, {once:true});
+        };
+        spawn(); interval = setInterval(spawn, 700);
+        timeout = setTimeout(stop, reducedMotion.matches ? 1500 : 12000);
     });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+    window.addEventListener('pagehide', stop);
 }
 
 // Start button listener when page loads
