@@ -55,7 +55,7 @@ if (typeof document !== 'undefined') (() => {
                 loadTimer = setTimeout(() => reject(new Error('Image timeout')), 15000);
                 picture.onload = resolve;
                 picture.onerror = reject;
-                picture.src = `/main/img/${files[scene]}?v=cat-fixed-1`;
+                picture.src = `/main/img/${files[scene]}?v=morning-light-2`;
             });
             if (id !== requestId) return;
             const previous = [...stage.children];
