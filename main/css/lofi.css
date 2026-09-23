@@ -138,3 +138,17 @@ body[data-scene="night"]::before {background:linear-gradient(180deg,rgba(10,21,5
  body:not(.chill-tab-open) .falling-gifs-button{bottom:195px}
 }
 @media(max-width:700px){.footer .scene-controls{padding:0 4px}.footer-links{gap:20px}}
+
+/* Reserve two lines so rotating translations do not shift the navigation. */
+.lofi-hero #motivation {min-height:2.8em;line-height:1.4;max-width:680px;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .35s ease}
+.lofi-hero #motivation.is-fading {opacity:0}
+body.chill-tab-open .lofi-hero #motivation {display:none}
+@media(max-width:700px){.lofi-hero #motivation{font-size:20px;min-height:4.2em}}
+@media(prefers-reduced-motion:reduce){.lofi-hero #motivation{transition:none}}
+
+.motivation-block {transition:opacity .35s ease}
+.motivation-block.is-fading {opacity:0}
+.lofi-hero .motivation-meta {min-height:48px;display:flex;align-items:center;justify-content:center;gap:12px;max-width:650px;margin:0 auto}
+#motivation-author {font-size:11px;color:#e7daeb;line-height:1.6;text-decoration:none;text-shadow:0 1px 5px #171121}
+body.chill-tab-open .motivation-block {display:none}
+@media(prefers-reduced-motion:reduce){.motivation-block{transition:none}}

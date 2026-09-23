@@ -339,8 +339,10 @@ header {
 <section class="lofi-hero" aria-label="Chill Time">
 <div class="lofi-eyebrow" data-i18n="lofiEyebrow">ТВОЙ ТИХИЙ УГОЛОК</div>
 <div id="id_clock"></div>
-<h1 data-i18n="lofiTitle">Побудь здесь. Выдохни.</h1>
-<p data-i18n="lofiSubtitle">Немного музыки, немного мечтаний.<br>И время только для себя.</p>
+<div class="motivation-block">
+<h1 id="motivation" data-i18n="lofiTitle">Побудь здесь. Выдохни.</h1>
+<div class="motivation-meta"><span id="motivation-author" hidden></span></div>
+</div>
 </section>
 <nav class="chill-tabs" aria-label="Разделы сайта" data-i18n-aria-label="navAriaLabel">
     <button class="chill-tab" data-tab="pomo" data-i18n="navPomo">⏱️ Помодоро</button>
@@ -459,6 +461,7 @@ allow="encrypted-media"></iframe>
 <script src="/main/scripts/scripts.js"></script>
 <script src="/main/scripts/scenes.js"></script>
 <script src="/main/scripts/ambience.js"></script>
+<script src="/main/scripts/motivation.js"></script>
 
 <!-- ===== NEW: Inline scripts for Pomodoro & 2048 ===== -->
 <script>

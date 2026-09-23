@@ -18,6 +18,18 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
     // Объект с переводами....
     const translations = {
         ru: {
+            quoteShakespeare: "Мы знаем, кто мы, но не знаем, кем можем стать.",
+            authorShakespeare: "Уильям Шекспир",
+            quoteChekhov: "Краткость — сестра таланта.",
+            authorChekhov: "Антон Чехов",
+            quoteBasho: "Старый пруд. Лягушка прыгает в воду — слышен всплеск.",
+            authorBasho: "Мацуо Басё",
+
+            motivationStep: "Маленький шаг — тоже движение вперёд.",
+            motivationToday: "Не обязательно успеть всё сегодня.",
+            motivationRest: "Отдых — тоже часть пути.",
+            motivationStart: "Сейчас достаточно просто начать.",
+
             sceneLabel: "Время суток",
             sceneAuto: "Авто · по часам",
             sceneMorning: "Утро",
@@ -85,6 +97,18 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
             fallingBtnTitle: "Нажмите для падающих GIF-ов"
         },
         en: {
+            quoteShakespeare: "We know what we are but know not what we may be.",
+            authorShakespeare: "William Shakespeare",
+            quoteChekhov: "Brevity is the sister of talent.",
+            authorChekhov: "Anton Chekhov",
+            quoteBasho: "An old pond. A frog jumps into the water — a splash.",
+            authorBasho: "Matsuo Bashō",
+
+            motivationStep: "A small step is still a step forward.",
+            motivationToday: "You don’t have to do it all today.",
+            motivationRest: "Rest is part of the journey, too.",
+            motivationStart: "For now, just beginning is enough.",
+
             sceneLabel: "Time of day",
             sceneAuto: "Auto · local time",
             sceneMorning: "Morning",
@@ -147,6 +171,18 @@ if (!window.__CHILL_SITE_BOOTSTRAPPED__) {
             fallingBtnTitle: "Click for falling GIFs"
         },
         jp: {
+            quoteShakespeare: "自分が何者かはわかっていても、何者になれるかはわからない。",
+            authorShakespeare: "ウィリアム・シェイクスピア",
+            quoteChekhov: "簡潔さは才能の姉妹である。",
+            authorChekhov: "アントン・チェーホフ",
+            quoteBasho: "古池や 蛙飛び込む 水の音",
+            authorBasho: "松尾芭蕉",
+
+            motivationStep: "小さな一歩も、前進。",
+            motivationToday: "今日、全部できなくても大丈夫。",
+            motivationRest: "休むことも、歩みのうち。",
+            motivationStart: "今は、始めるだけで十分。",
+
             sceneLabel: "時間帯",
             sceneAuto: "自動・現地時間",
             sceneMorning: "朝",
